@@ -29,7 +29,7 @@ const Rewards = () => {
       </div>
 
       {/* Section */}
-      <h2 className="text-xl font-semibold mt-8">
+      <h2 className="text-2xl border-l-4  border-purple-700 pl-[12px] font-semibold mt-8">
         Your Rewards Journey
       </h2>
 

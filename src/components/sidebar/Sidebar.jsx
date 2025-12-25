@@ -1,30 +1,41 @@
-// src/components/sidebar/Sidebar.jsx
+import {
+  Home,
+  Compass,
+  BookOpen,
+  Layers,
+  CreditCard,
+  Gift,
+  Settings,
+} from "lucide-react";
 import SidebarItem from "./SidebarItem";
+import FlowvaLogo from "../../assets/flowva_logo.png"
 
 const Sidebar = () => {
-  return (
-    <aside className="w-64 bg-white border-r px-4 py-6">
+  return (  
+    <aside className="w-[230px] bg-white border-r border-gray-300 px-4 py-6">
       {/* Logo */}
       <div className="flex items-center gap-2 mb-8">
-        <div className="h-8 w-8 rounded-full bg-purple-600" />
-        <span className="font-semibold text-lg">Flowva</span>
+        <div className=" rounded-full w-40" >
+        
+        <img src={FlowvaLogo} alt="Flowva Logo" />
+        </div>
       </div>
 
       {/* Nav */}
       <nav className="space-y-1">
-        <SidebarItem label="Home" />
-        <SidebarItem label="Discover" />
-        <SidebarItem label="Library" />
-        <SidebarItem label="Tech Stack" />
-        <SidebarItem label="Subscriptions" />
-        <SidebarItem label="Rewards Hub" active />
-        <SidebarItem label="Settings" />
+        <SidebarItem icon={Home} label="Home" />
+        <SidebarItem icon={Compass} label="Discover" />
+        <SidebarItem icon={BookOpen} label="Library" />
+        <SidebarItem icon={Layers} label="Tech Stack" />
+        <SidebarItem icon={CreditCard} label="Subscriptions" />
+        <SidebarItem icon={Gift} label="Rewards Hub" active />
+        <SidebarItem icon={Settings} label="Settings" />
       </nav>
 
       {/* User */}
-      <div className="mt-auto pt-6 border-t">
+      <div className="mt-auto py-4 border-t">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+          <div className="h-10 w-10 rounded-full text-purple-700 font-bold bg-purple-200 flex items-center justify-center">
             D
           </div>
           <div>
