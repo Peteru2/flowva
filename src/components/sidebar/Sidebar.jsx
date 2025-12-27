@@ -9,10 +9,28 @@ import {
 } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import FlowvaLogo from "../../assets/flowva_logo.png"
+import { useRewards } from "../../hooks/useRewards";
+import { useAuth } from "../../context/AuthContext";
 
-const Sidebar = () => {
+
+const Sidebar = ({open, setOpen}) => {
+  const { user } = useAuth();
   return (  
-    <aside className="w-[230px] bg-white border-r border-gray-300 px-4 py-6">
+  <>
+  {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+        />
+      )}
+    <aside className={`
+- fixed top-0 left-0 z-40 h-screen w-[230px]
++ fixed top-0 left-0 z-40 h-screen w-[230px] flex flex-col
+  bg-white border-r border-gray-200 px-4 pt-6 pb-2
+  transform transition-transform duration-300
+  ${open ? "translate-x-0" : "-translate-x-full"}
+  md:translate-x-0
+`}>
       {/* Logo */}
       <div className="flex items-center gap-2 mb-8">
         <div className=" rounded-full w-40" >
@@ -35,18 +53,25 @@ const Sidebar = () => {
       {/* User */}
       <div className="mt-auto py-4 border-t">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full text-purple-700 font-bold bg-purple-200 flex items-center justify-center">
-            D
-          </div>
+          <div className="h-10 w-10 rounded-full bg-purple-200 text-purple-700 font-bold flex items-center justify-center">
+  {user?.email?.[0]?.toUpperCase()}
+</div>
           <div>
-            <p className="text-sm font-medium">DevPeter</p>
+            <p className="text-sm font-medium">
+{user?.email?.slice(0,4).toUpperCase()}
+
+            </p>
             <p className="text-xs text-gray-500">
-              polalekan526@gmail.com
+              
+              {user?.email}
+              {/* {user?.id} */}
+
             </p>
           </div>
         </div>
       </div>
     </aside>
+</>
   );
 };
 

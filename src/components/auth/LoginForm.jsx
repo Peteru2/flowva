@@ -17,17 +17,19 @@ const LoginForm = () => {
     setError("");
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const {  error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-
+    
+  
     if (error) {
       setError(error.message);
       setLoading(false);
       return;
     }
-    navigate("/");
+      setLoading(false);
+    navigate("/rewards");
   };
   useEffect(() => {
     if (!error) return;
@@ -102,7 +104,7 @@ const LoginForm = () => {
           type="submit"
           disabled={loading}
           className="w-full py-3 rounded-full bg-purple-600 text-white font-medium
-          hover:bg-purple-700 disabled:opacity-50 transition"
+          hover:bg-purple-700 cursor-pointer disabled:opacity-50 transition"
         >
           {loading ? "Signing in..." : "Sign in"}
         </button>

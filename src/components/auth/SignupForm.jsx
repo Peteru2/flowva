@@ -17,13 +17,17 @@ const SignupForm = () => {
   useEffect(() => {
   if (!error) return;
 
-  const timer = setTimeout(() => {
-    setError("");
-     setMessage("");
-  }, 4000);
-
+  const timer = setTimeout(() => setError(""), 4000);
   return () => clearTimeout(timer);
 }, [error]);
+
+useEffect(() => {
+  if (!message) return;
+
+  const timer = setTimeout(() => setMessage(""), 4000);
+  return () => clearTimeout(timer);
+}, [message]);
+
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -38,15 +42,24 @@ if (password !== confirmPassword) {
       setError("Password must be at least 6 characters");
       return;
     }
-console.log(email+"Let's ride")
+    
+
 
     setLoading(true);
 
-const { error } = await supabase.auth.signUp({
+const { data, error } = await supabase.auth.signUp({
   email,
   password,
 });
 
+if (!data.user) {
+    setError("Email already registered. Please log in.");
+    setEmail("")
+    setPassword("")
+    setConfirmPassword("")
+    setLoading(false);
+    return;
+    }
     if (error) {
       setError(error.message);
       setLoading(false);
@@ -54,11 +67,11 @@ const { error } = await supabase.auth.signUp({
     } else {
       setMessage("Check your email to verify your account.");
     }
-    navigate("/login")
+    setEmail("")
+    setPassword("")
+    setConfirmPassword("")
     setLoading(false);
   };
-  const passwordsMatch =
-  password && confirmPassword && password === confirmPassword;
 
   return (
      <motion.div
@@ -82,6 +95,7 @@ const { error } = await supabase.auth.signUp({
              <div className="w-full mt-4 flex justify-center"> 
             <p className="bg-red-100 w-full border border-red-400 rounded-[4px] text-center p-2">{error}</p>
           </div> }
+
          {message &&
              <div className="w-full mt-4 flex justify-center"> 
             <p className="bg-green-100 w-full border border-green-400 rounded-[4px] text-center p-2">{message}</p>

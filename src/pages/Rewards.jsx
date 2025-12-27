@@ -1,3 +1,8 @@
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
+
+import { handleDailyCheckin } from "../utils/dailyCheckin";
 import DashboardLayout from "../layout/DashboardLayout";
 import RewardsTabs from "../components/rewards/RewardsTabs";
 import PointsCard from "../components/rewards/PointsCard";
@@ -5,26 +10,28 @@ import DailyStreakCard from "../components/rewards/DailyStreakCard";
 import SpotlightCard from "../components/rewards/SpotlightCard";
 
 
+
 const Rewards = () => {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user?.id) return;
+
+    handleDailyCheckin(user.id)
+      .catch(err => console.error("Daily check-in failed:", err));
+  }, [user?.id]);
+
   return (
     <DashboardLayout>
       {/* Header */}
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-2xl font-semibold">Rewards Hub</h1>
-          <p className="text-gray-500 mt-1">
-            Earn points, unlock rewards, and celebrate your progress!
-          </p>
-        </div>
-
-        {/* Notification */}
-        <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
-          🔔
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <div className="mt-6">
+      <div className=" bg-gray-50 items-start">
+        
+      <div className="md:mt-24 mt-14 mb-4">
+      <p className="text-gray-500 mb-4  md:hidden flex">
+                      Earn points, unlock rewards, and celebrate your progress!
+                    </p>
+           {/* Tabs */}
+      <div >
         <RewardsTabs />
       </div>
 
@@ -39,6 +46,8 @@ const Rewards = () => {
         <DailyStreakCard />
         <SpotlightCard />
       </div>
+      </div>
+</div>
     </DashboardLayout>
   );
 };
