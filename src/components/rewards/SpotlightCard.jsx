@@ -6,7 +6,11 @@ import {
 } from "lucide-react";
 const SpotlightCard = () => {
   return (
-    <div className="rounded-xl  text-white bg-gradient-to-br from-purple-600 to-blue-500 relative">
+    <div className="rounded-xl  text-white bg-gradient-to-br from-purple-600 to-blue-500 relative
+    transition-all duration-300 ease-out
+    hover:-translate-y-2
+    hover:shadow-2xl
+    ">
       <div className="p-5">
       <span className="text-xs bg-white/20 px-3 py-1 rounded-full">
         Featured

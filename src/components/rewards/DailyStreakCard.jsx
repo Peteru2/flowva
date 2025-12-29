@@ -14,7 +14,8 @@ const DailyStreakCard = () => {
   const [claimedToday, setClaimedToday] = useState(false);
 const [claiming, setClaiming] = useState(false);
 const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { user } = useAuth();
+ const { user, rewards, refreshRewards } = useAuth();
+
 
   const handleClaim = async () => {
   if (claimedToday || claiming) return;
@@ -29,7 +30,7 @@ const [showSuccessModal, setShowSuccessModal] = useState(false);
     ) {
       setClaimedToday(true);
       setShowSuccessModal(true);
-      
+      refreshRewards()
     }
   }
 
@@ -53,11 +54,19 @@ useEffect(() => {
 
   if (user?.id) checkClaimStatus();
 }, [user?.id]);
-    const rewards = useRewards(user?.id); 
+  
 
     
   return (
-    <div className="bg-white rounded-xl shadow">
+    <>
+    <div
+  className="
+    bg-white rounded-xl shadow
+    transition-all duration-300 ease-out
+    hover:-translate-y-2
+    hover:shadow-2xl
+  "
+>
       <h3 className="font-medium text-[18px] text-gray-700 flex rounded-t-xl bg-indigo-50 p-5">
         <Calendar className="mr-2 text-sky-300" />
         Daily Streak</h3>
@@ -89,13 +98,15 @@ useEffect(() => {
         {claimedToday ? "Claimed Today" : claiming ? "Claiming..." : "Claim Daily Points"}
 </button>
     </div>
-<RewardSuccessModal
+
+
+    </div>
+    <RewardSuccessModal
   isOpen={showSuccessModal}
   onClose={() => setShowSuccessModal(false)}
   points={5}
 />
-
-    </div>
+    </>
   );
 };
 

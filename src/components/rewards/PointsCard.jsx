@@ -3,17 +3,22 @@ import {
   Star
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { useRewards } from "../../hooks/useRewards";
 
-const PointsCard = () => {
-  const { user } = useAuth();
-  const rewards = useRewards(user?.id); 
+
+const PointsCard = () => { 
+ const { rewards } = useAuth();
+
+
   
   const maxPoints = 5000;
   const progress = (rewards?.points / maxPoints) * 100;
 
   return (
-    <div className="bg-white rounded-xl shadow">
+    <div className="bg-white rounded-xl shadow
+    transition-all duration-300 ease-out
+    hover:-translate-y-2
+    hover:shadow-2xl
+    ">
       <h3 className="font-medium text-[18px] text-gray-700 flex rounded-t-xl bg-indigo-50 p-5">
       
         <Award className="text-purple-700 mr-2"/>
@@ -32,7 +37,7 @@ const PointsCard = () => {
 
 <div className="flex w-full justify-between mt-3 items-center">
       <p className="text-sm text-gray-500 w-full  flex">
-        Progress to $5 Gift Card
+        Progress to {" "}<span className="font-bold ml-[2px]"> $5 Gift Card</span>
       </p>
 
        <div className="flex  text-xs font-bold text-gray-700 ">

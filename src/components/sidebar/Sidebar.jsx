@@ -11,10 +11,15 @@ import SidebarItem from "./SidebarItem";
 import FlowvaLogo from "../../assets/flowva_logo.png"
 import { useRewards } from "../../hooks/useRewards";
 import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
 
 
 const Sidebar = ({open, setOpen}) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const [profileCheck, setProfileCheck] = useState(false)
+  const handleProfile = () =>{
+    setProfileCheck(!profileCheck)
+  }
   return (  
   <>
   {open && (
@@ -56,7 +61,18 @@ const Sidebar = ({open, setOpen}) => {
           <div className="h-10 w-10 rounded-full bg-purple-200 text-purple-700 font-bold flex items-center justify-center">
   {user?.email?.[0]?.toUpperCase()}
 </div>
-          <div>
+          <div className="relative cursor-pointer" onClick={()=> setProfileCheck(!profileCheck)}>
+
+{
+  profileCheck && (
+<div className="bg-white border border-purple-700 px-4 py-2 rounded-lg absolute bottom-14 left-[-45px]">
+              <button className="p-2 cursor-pointer text-left hover:bg-purple-100 rounded-lg w-52">Feedback</button>
+              <button className="p-2 cursor-pointer  text-left hover:bg-purple-100 rounded-lg w-52">Support</button>
+              <button onClick={logout} className="p-2 cursor-pointer text-left hover:bg-red-50 hover:text-red-500 rounded-lg w-52"> Log Out</button>
+            </div>
+  )
+}
+            
             <p className="text-sm font-medium">
 {user?.email?.slice(0,4).toUpperCase()}
 

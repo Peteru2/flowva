@@ -8,18 +8,20 @@ import RewardsTabs from "../components/rewards/RewardsTabs";
 import PointsCard from "../components/rewards/PointsCard";
 import DailyStreakCard from "../components/rewards/DailyStreakCard";
 import SpotlightCard from "../components/rewards/SpotlightCard";
+import EarnMorePoints from "../components/rewards/EarnMorePoints";
+import ReferAndEarn from "../components/rewards/ReferAndEarn";
 
 
 
 const Rewards = () => {
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (!user?.id) return;
+  // useEffect(() => {
+  //   if (!user?.id) return;
 
-    handleDailyCheckin(user.id)
-      .catch(err => console.error("Daily check-in failed:", err));
-  }, [user?.id]);
+  //   handleDailyCheckin(user.id)
+  //     .catch(err => console.error("Daily check-in failed:", err));
+  // }, [user?.id]);
 
   return (
     <DashboardLayout>
@@ -45,6 +47,13 @@ const Rewards = () => {
         <PointsCard />
         <DailyStreakCard />
         <SpotlightCard />
+      </div>
+      <div>
+        <EarnMorePoints />
+       
+      </div>
+      <div>
+        <ReferAndEarn />
       </div>
       </div>
 </div>

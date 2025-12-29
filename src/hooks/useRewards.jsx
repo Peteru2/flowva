@@ -1,18 +1,28 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../lib/supabase";
+
 export const useRewards = (userId) => {
   const [rewards, setRewards] = useState(null);
-
-  useEffect(() => {
+  const [loading, setLoading] = useState(true);
+  const fetchRewards = useCallback(async () => {
     if (!userId) return;
 
-    supabase
+    setLoading(true);
+
+    const { data, error } = await supabase
       .from("profiles")
-      .select("points, daily_streak, last_checkin")
+      .select("daily_streak, points")
       .eq("id", userId)
-      .single()
-      .then(({ data }) => setRewards(data));
+      .single();
+
+    if (!error) setRewards(data);
+
+    setLoading(false);
   }, [userId]);
 
-  return rewards;
+  useEffect(() => {
+    fetchRewards();
+  }, [fetchRewards]);
+
+  return { rewards, loading, refreshRewards: fetchRewards };
 };
